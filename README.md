@@ -8,7 +8,7 @@
 
 # TO-DO:
 
-Priority:
+## Priority:
 1. Create rooms.
 2. Create home room.
 3. Add the ability to branch rooms.
@@ -17,5 +17,5 @@ Priority:
 6. Timer
 7. Early, mid, late game (info needed later)
 
-Low priority:
+## Low priority:
 1. Change room colors on click.
