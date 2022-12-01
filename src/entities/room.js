@@ -1,7 +1,7 @@
 export default class Room {
-  constructor(isHome, roomId) {
-    (this.isHome = isHome),
-      (this.roomId = roomId),
+  constructor(roomId, isHome) {
+    (this.roomId = roomId),
+      (this.isHome = isHome),
       (this.branches = {
         up: null,
         down: null,
