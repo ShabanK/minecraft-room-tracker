@@ -1,5 +1,7 @@
+import Room from "./room";
+
 export default class MapTracker {
   constructor() {
-    grid: [];
+    this.grid = [];
   }
 }
