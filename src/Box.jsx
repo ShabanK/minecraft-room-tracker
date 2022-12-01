@@ -18,10 +18,7 @@ export default function Box() {
     console.log(direction);
   }
 
-  function debug() {
-    console.log(grid);
-    console.log(grid[gridRadius][gridRadius]);
-  }
+  function debug() {}
 
   return (
     <>
@@ -33,7 +30,7 @@ export default function Box() {
                 box && console.log(box);
                 return box ? (
                   <div key={boxIndex} className="box">
-                    HOME {rowIndex} {boxIndex}
+                    HOME
                   </div>
                 ) : (
                   <div key={boxIndex} className="box">
@@ -54,19 +51,4 @@ export default function Box() {
       </div>
     </>
   );
-  {
-    /* 
-    <>
-      <div className="main">
-        {map &&
-          map.grid.map((room, index) => (
-            <div key={index} className="room">
-              {room.roomId}
-            </div>
-          ))}
-      </div>
-      
-      </>
-    */
-  }
 }
