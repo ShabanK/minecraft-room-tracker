@@ -30,15 +30,14 @@ body {
 
 .row {
   display: flex;
-  margin: 0.5rem;
-  border: 2px solid yellow;
   width: fit-content;
   height: fit-content;
 }
 
 .box {
-  width: 2rem;
-  height: 2rem;
+  text-align: center;
+  border: 1px solid red;
+  width: 4rem;
+  height: 4rem;
   background-color: blue;
-  margin: 0.5rem;
 }
