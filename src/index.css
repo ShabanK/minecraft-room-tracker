@@ -35,9 +35,15 @@ body {
 }
 
 .box {
-  text-align: center;
-  border: 1px solid red;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 4rem;
   height: 4rem;
   background-color: blue;
+}
+
+.boxBlank {
+  width: 4rem;
+  height: 4rem;
 }
