@@ -7,7 +7,7 @@ export default function Box() {
   const [grid, setGrid] = useState(() => {
     let arr = new Array(gridRadius * 2 + 1).fill().map(function () {
       return new Array(gridRadius * 2 + 1).fill().map(() => {
-        return "";
+        return null;
       });
     });
     arr[gridRadius][gridRadius] = new Room(`${gridRadius}/${gridRadius}`, true);
@@ -18,8 +18,21 @@ export default function Box() {
     col: gridRadius,
   });
 
+  function reset() {
+    let arr = new Array(gridRadius * 2 + 1).fill().map(function () {
+      return new Array(gridRadius * 2 + 1).fill().map(() => {
+        return null;
+      });
+    });
+    arr[gridRadius][gridRadius] = new Room(`${gridRadius}/${gridRadius}`, true);
+    setGrid(arr);
+    setCurrentSelection({
+      row: gridRadius,
+      col: gridRadius,
+    });
+  }
+
   function addRoom(direction) {
-    console.log(direction);
     const { row, col } = currentSelection;
     let targetRow = null,
       targetCol = null;
@@ -35,7 +48,6 @@ export default function Box() {
       case "down":
         if (row + 1 <= gridRadius * 2) {
           if (!grid[row + 1][col]) {
-            console.log("fire");
             targetRow = row + 1;
             targetCol = col;
           }
@@ -44,7 +56,6 @@ export default function Box() {
       case "left":
         if (col - 1 >= 0) {
           if (!grid[row][col - 1]) {
-            // console.log(col - 1, grid[row][col - 1]);
             targetRow = row;
             targetCol = col - 1;
           }
@@ -59,8 +70,6 @@ export default function Box() {
         }
         break;
     }
-
-    console.log({ targetRow, targetCol });
 
     if (Number.isInteger(targetRow) && Number.isInteger(targetCol)) {
       // update grid
@@ -79,6 +88,11 @@ export default function Box() {
     }
   }
 
+  function isCurrent(rowIndex, colIndex) {
+    const { row, col } = currentSelection;
+    return rowIndex === row && colIndex === col;
+  }
+
   function debug() {
     // console.log(currentSelection);
     console.log(grid);
@@ -91,11 +105,32 @@ export default function Box() {
           return (
             <div key={rowIndex} className="row">
               {rows.map((box, boxIndex) => {
-                box && console.log(box);
                 return box ? (
-                  <div key={boxIndex} className="box">
-                    HOME
-                  </div>
+                  box.isHome ? (
+                    <div
+                      key={boxIndex}
+                      className="box"
+                      style={{
+                        border: isCurrent(rowIndex, boxIndex)
+                          ? "1px solid red"
+                          : "1px",
+                      }}
+                    >
+                      HOME
+                    </div>
+                  ) : (
+                    <div
+                      key={boxIndex}
+                      className="box"
+                      style={{
+                        border: isCurrent(rowIndex, boxIndex)
+                          ? "1px solid red"
+                          : "1px",
+                      }}
+                    >
+                      {rowIndex},{boxIndex}
+                    </div>
+                  )
                 ) : (
                   <div key={boxIndex} className="boxBlank"></div>
                 );
@@ -110,6 +145,7 @@ export default function Box() {
         <button onClick={() => addRoom("left")}>left</button>
         <button onClick={() => addRoom("right")}>right</button>
         <button onClick={debug}>test</button>
+        <button onClick={reset}>reset</button>
       </div>
     </>
   );
