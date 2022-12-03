@@ -1,9 +1,11 @@
 // import MapTracker from "./entities/maptracker";
 import Room from "./entities/room";
-import { useState, useEffect } from "react";
+import RoomDiv from "./RoomDiv";
+import { useState, useEffect, useMemo } from "react";
 
 export default function Box() {
   const gridRadius = 5;
+  const [trail, setTrail] = useState([]);
   const [grid, setGrid] = useState(() => {
     let arr = new Array(gridRadius * 2 + 1).fill().map(function () {
       return new Array(gridRadius * 2 + 1).fill().map(() => {
@@ -11,6 +13,7 @@ export default function Box() {
       });
     });
     arr[gridRadius][gridRadius] = new Room(`${gridRadius}/${gridRadius}`, true);
+    trail.push(`${gridRadius}/${gridRadius}`);
     return arr;
   });
   const [currentSelection, setCurrentSelection] = useState({
@@ -26,6 +29,7 @@ export default function Box() {
     });
     arr[gridRadius][gridRadius] = new Room(`${gridRadius}/${gridRadius}`, true);
     setGrid(arr);
+    trail.push(`${gridRadius}/${gridRadius}`);
     setCurrentSelection({
       row: gridRadius,
       col: gridRadius,
@@ -85,6 +89,7 @@ export default function Box() {
 
       // update selection
       setCurrentSelection({ row: targetRow, col: targetCol });
+      trail.push(`${targetRow}/${targetCol}`);
     }
   }
 
@@ -95,7 +100,8 @@ export default function Box() {
 
   function debug() {
     // console.log(currentSelection);
-    console.log(grid);
+    // console.log(grid);
+    console.log(trail);
   }
 
   return (
@@ -107,29 +113,13 @@ export default function Box() {
               {rows.map((box, boxIndex) => {
                 return box ? (
                   box.isHome ? (
-                    <div
-                      key={boxIndex}
-                      className="box"
-                      style={{
-                        border: isCurrent(rowIndex, boxIndex)
-                          ? "1px solid red"
-                          : "1px",
-                      }}
-                    >
+                    <RoomDiv key={boxIndex} isHome={true}>
                       HOME
-                    </div>
+                    </RoomDiv>
                   ) : (
-                    <div
-                      key={boxIndex}
-                      className="box"
-                      style={{
-                        border: isCurrent(rowIndex, boxIndex)
-                          ? "1px solid red"
-                          : "1px",
-                      }}
-                    >
+                    <RoomDiv key={boxIndex}>
                       {rowIndex},{boxIndex}
-                    </div>
+                    </RoomDiv>
                   )
                 ) : (
                   <div key={boxIndex} className="boxBlank"></div>
