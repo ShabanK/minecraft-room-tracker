@@ -113,11 +113,18 @@ export default function Box() {
               {rows.map((box, boxIndex) => {
                 return box ? (
                   box.isHome ? (
-                    <RoomDiv key={boxIndex} isHome={true}>
+                    <RoomDiv
+                      key={boxIndex}
+                      isHome={true}
+                      isCurrent={isCurrent(rowIndex, boxIndex)}
+                    >
                       HOME
                     </RoomDiv>
                   ) : (
-                    <RoomDiv key={boxIndex}>
+                    <RoomDiv
+                      key={boxIndex}
+                      isCurrent={isCurrent(rowIndex, boxIndex)}
+                    >
                       {rowIndex},{boxIndex}
                     </RoomDiv>
                   )
