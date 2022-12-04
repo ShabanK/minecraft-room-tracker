@@ -98,6 +98,35 @@ export default function Box() {
     return rowIndex === row && colIndex === col;
   }
 
+  function deleteBox(value) {
+    console.log(value);
+    console.log(trail.findIndex((trailItem) => value === trailItem));
+    const purgeIndex = trail.findIndex((trailItem) => value === trailItem);
+    const purgeTrail = trail.slice(purgeIndex);
+    console.log({ purgeTrail });
+    // for (let i = purgeIndex; i < trail.length; i++) {
+    //   const purgeValue = trail[i];
+    //   console.log(purgeValue);
+    //   const targetRow = parseInt(purgeValue.split("/")[0]);
+    //   const targetCol = parseInt(purgeValue.split("/")[1]);
+
+    //   console.log({ targetRow, targetCol });
+    // }
+    setGrid(() => {
+      return grid.map((rows, rowIndex) => {
+        return rows.map((room, colIndex) => {
+          if (
+            purgeTrail.find(
+              (purgeItem) => purgeItem === `${rowIndex}/${colIndex}`
+            )
+          ) {
+            return null;
+          } else return room;
+        });
+      });
+    });
+  }
+
   function debug() {
     // console.log(currentSelection);
     // console.log(grid);
@@ -117,16 +146,16 @@ export default function Box() {
                       key={boxIndex}
                       isHome={true}
                       isCurrent={isCurrent(rowIndex, boxIndex)}
-                    >
-                      HOME
-                    </RoomDiv>
+                      value="HOME"
+                    />
                   ) : (
                     <RoomDiv
                       key={boxIndex}
                       isCurrent={isCurrent(rowIndex, boxIndex)}
-                    >
-                      {rowIndex},{boxIndex}
-                    </RoomDiv>
+                      deleteBox={deleteBox}
+                      isHome={false}
+                      value={`${rowIndex}/${boxIndex}`}
+                    />
                   )
                 ) : (
                   <div key={boxIndex} className="boxBlank"></div>

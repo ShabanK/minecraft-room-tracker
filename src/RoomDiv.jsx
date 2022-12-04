@@ -1,8 +1,9 @@
 import { useState } from "react";
 
-export default function RoomDiv({ isCurrent, children }) {
+export default function RoomDiv({ isCurrent, value, deleteBox, isHome }) {
   const [bgcolor, setbgcolor] = useState(0);
   const listOfColors = ["blue", "green", "yellow", "orange", "white"];
+
   function changeBackgroundColor() {
     if (bgcolor + 1 === listOfColors.length) setbgcolor(0);
     else setbgcolor(bgcolor + 1);
@@ -17,7 +18,8 @@ export default function RoomDiv({ isCurrent, children }) {
       }}
       onClick={changeBackgroundColor}
     >
-      {children}
+      {!isHome && <button onClick={() => deleteBox(value)}>X</button>}
+      {value}
     </div>
   );
 }
