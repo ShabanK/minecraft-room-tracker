@@ -4,7 +4,8 @@ import RoomDiv from "./RoomDiv";
 import { useState, useEffect, useMemo } from "react";
 
 export default function Box() {
-  const gridRadius = 5;
+  const gridRadius = 20;
+  const [mode, setMode] = useState(false);
   const [trail, setTrail] = useState([]);
   const [grid, setGrid] = useState(() => {
     let arr = new Array(gridRadius * 2 + 1).fill().map(function () {
@@ -99,19 +100,9 @@ export default function Box() {
   }
 
   function deleteBox(value) {
-    console.log(value);
-    console.log(trail.findIndex((trailItem) => value === trailItem));
     const purgeIndex = trail.findIndex((trailItem) => value === trailItem);
     const purgeTrail = trail.slice(purgeIndex);
-    console.log({ purgeTrail });
-    // for (let i = purgeIndex; i < trail.length; i++) {
-    //   const purgeValue = trail[i];
-    //   console.log(purgeValue);
-    //   const targetRow = parseInt(purgeValue.split("/")[0]);
-    //   const targetCol = parseInt(purgeValue.split("/")[1]);
 
-    //   console.log({ targetRow, targetCol });
-    // }
     setGrid(() => {
       return grid.map((rows, rowIndex) => {
         return rows.map((room, colIndex) => {
@@ -158,7 +149,7 @@ export default function Box() {
                     />
                   )
                 ) : (
-                  <div key={boxIndex} className="boxBlank"></div>
+                  <RoomDiv key={boxIndex} isHome={false} isBlank={true} />
                 );
               })}
             </div>
@@ -170,6 +161,9 @@ export default function Box() {
         <button onClick={() => addRoom("down")}>down</button>
         <button onClick={() => addRoom("left")}>left</button>
         <button onClick={() => addRoom("right")}>right</button>
+        <button onClick={() => setMode(!mode)}>
+          {mode ? "late" : "early"}
+        </button>
         <button onClick={debug}>test</button>
         <button onClick={reset}>reset</button>
       </div>
