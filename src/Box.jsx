@@ -4,7 +4,7 @@ import RoomDiv from "./RoomDiv";
 import { useState, useEffect, useMemo } from "react";
 
 export default function Box() {
-  const gridRadius = 20;
+  const gridRadius = 5;
   const [mode, setMode] = useState(false);
   const [trail, setTrail] = useState([]);
   const [grid, setGrid] = useState(() => {
@@ -37,7 +37,9 @@ export default function Box() {
     });
   }
 
-  function addRoom(direction) {
+  function addRoom(direction, isCurrent) {
+    console.log({ direction, isCurrent });
+    if (!isCurrent) return;
     const { row, col } = currentSelection;
     let targetRow = null,
       targetCol = null;
@@ -138,6 +140,7 @@ export default function Box() {
                       isHome={true}
                       isCurrent={isCurrent(rowIndex, boxIndex)}
                       value="HOME"
+                      addRoom={addRoom}
                     />
                   ) : (
                     <RoomDiv
@@ -145,7 +148,10 @@ export default function Box() {
                       isCurrent={isCurrent(rowIndex, boxIndex)}
                       deleteBox={deleteBox}
                       isHome={false}
-                      value={`${rowIndex}/${boxIndex}`}
+                      value={`${rowIndex - gridRadius}/${
+                        boxIndex - gridRadius
+                      }`}
+                      addRoom={addRoom}
                     />
                   )
                 ) : (
@@ -156,15 +162,10 @@ export default function Box() {
           );
         })}
       </div>
-      <div style={{ display: "flex", flexDirection: "column" }}>
-        <button onClick={() => addRoom("up")}>up</button>
-        <button onClick={() => addRoom("down")}>down</button>
-        <button onClick={() => addRoom("left")}>left</button>
-        <button onClick={() => addRoom("right")}>right</button>
+      <div style={{ display: "flex" }}>
         <button onClick={() => setMode(!mode)}>
           {mode ? "late" : "early"}
         </button>
-        <button onClick={debug}>test</button>
         <button onClick={reset}>reset</button>
       </div>
     </>

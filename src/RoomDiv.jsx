@@ -6,6 +6,7 @@ export default function RoomDiv({
   deleteBox,
   isHome,
   isBlank,
+  addRoom,
 }) {
   const [bgcolor, setbgcolor] = useState(0);
   const listOfColors = ["blue", "green", "yellow", "orange", "white"];
@@ -14,6 +15,7 @@ export default function RoomDiv({
     if (bgcolor + 1 === listOfColors.length) setbgcolor(0);
     else setbgcolor(bgcolor + 1);
   }
+
   if (isBlank) {
     return <div className="boxBlank"></div>;
   } else {
@@ -21,13 +23,31 @@ export default function RoomDiv({
       <div
         className="box"
         style={{
-          border: isCurrent ? "1px solid red" : "1px solid black",
-          backgroundColor: listOfColors[bgcolor],
+          border: "1px solid black",
         }}
-        onClick={changeBackgroundColor}
       >
-        {!isHome && <button onClick={() => deleteBox(value)}>X</button>}
-        {value}
+        <div className="pipe" onClick={() => addRoom("up", isCurrent)}></div>
+        <div className="middle">
+          <div
+            className="pipe"
+            onClick={() => addRoom("left", isCurrent)}
+          ></div>
+          <div
+            className="inner-box"
+            style={{
+              border: isCurrent ? "2px solid red" : "2px solid black",
+              backgroundColor: listOfColors[bgcolor],
+            }}
+            onClick={changeBackgroundColor}
+          ></div>
+          <div
+            className="pipe"
+            onClick={() => addRoom("right", isCurrent)}
+          ></div>
+        </div>
+        <div className="pipe" onClick={() => addRoom("down", isCurrent)}></div>
+        {/* {!isHome && <button onClick={() => deleteBox(value)}>X</button>}
+        {value} */}
       </div>
     );
   }
