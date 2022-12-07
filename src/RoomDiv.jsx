@@ -8,20 +8,20 @@ export default function RoomDiv({
   isBlank,
   addRoom,
 }) {
+  const ref = useRef();
   const [bgcolor, setbgcolor] = useState(0);
   const listOfColors = ["blue", "green", "yellow", "orange", "white"];
 
-  const ref = useRef();
-
   useEffect(() => {
     if (ref.current) {
+      console.log("fire");
       ref.current.scrollIntoView({
         behavior: "auto",
         block: "center",
         inline: "center",
       });
     }
-  }, [ref.current]);
+  }, [isCurrent]);
 
   function changeBackgroundColor() {
     if (bgcolor + 1 === listOfColors.length) setbgcolor(0);
@@ -37,6 +37,7 @@ export default function RoomDiv({
         style={{
           border: "1px solid black",
         }}
+        ref={isCurrent ? ref : null}
       >
         <div className="pipe" onClick={() => addRoom("up", isCurrent)}></div>
         <div className="middle">
@@ -46,7 +47,6 @@ export default function RoomDiv({
           ></div>
           <div
             className="inner-box"
-            ref={isCurrent ? ref : null}
             style={{
               border: isCurrent ? "2px solid red" : "2px solid black",
               backgroundColor: listOfColors[bgcolor],

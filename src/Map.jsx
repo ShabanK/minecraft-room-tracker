@@ -132,7 +132,6 @@ export default function Box() {
           return (
             <div key={rowIndex} className="row">
               {rows.map((box, boxIndex) => {
-                if (box) console.log(box);
                 return box ? (
                   box.isHome ? (
                     <RoomDiv
