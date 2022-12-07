@@ -11,10 +11,10 @@ export default function RoomDiv({
   const ref = useRef();
   const [bgcolor, setbgcolor] = useState(0);
   const listOfColors = ["blue", "green", "yellow", "orange", "white"];
+  const [initialState, setInitialState] = useState("");
 
   useEffect(() => {
     if (ref.current) {
-      console.log("fire");
       ref.current.scrollIntoView({
         behavior: "auto",
         block: "center",
@@ -39,11 +39,31 @@ export default function RoomDiv({
         }}
         ref={isCurrent ? ref : null}
       >
-        <div className="pipe" onClick={() => addRoom("up", isCurrent)}></div>
+        <div
+          className="pipe"
+          onClick={() => {
+            setInitialState("up");
+            addRoom("up", isCurrent, isHome);
+          }}
+          style={{
+            visibility:
+              isHome && initialState && !(initialState === "up") && "hidden",
+          }}
+        ></div>
         <div className="middle">
           <div
             className="pipe"
-            onClick={() => addRoom("left", isCurrent)}
+            onClick={() => {
+              setInitialState("left");
+              addRoom("left", isCurrent, isHome);
+            }}
+            style={{
+              visibility:
+                isHome &&
+                initialState &&
+                !(initialState === "left") &&
+                "hidden",
+            }}
           ></div>
           <div
             className="inner-box"
@@ -55,12 +75,30 @@ export default function RoomDiv({
           ></div>
           <div
             className="pipe"
-            onClick={() => addRoom("right", isCurrent)}
+            onClick={() => {
+              setInitialState("right");
+              addRoom("right", isCurrent, isHome);
+            }}
+            style={{
+              visibility:
+                isHome &&
+                initialState &&
+                !(initialState === "right") &&
+                "hidden",
+            }}
           ></div>
         </div>
-        <div className="pipe" onClick={() => addRoom("down", isCurrent)}></div>
-        {/* {!isHome && <button onClick={() => deleteBox(value)}>X</button>}
-        {value} */}
+        <div
+          className="pipe"
+          style={{
+            visibility:
+              isHome && initialState && !(initialState === "down") && "hidden",
+          }}
+          onClick={() => {
+            setInitialState("down");
+            addRoom("down", isCurrent, isHome);
+          }}
+        ></div>
       </div>
     );
   }

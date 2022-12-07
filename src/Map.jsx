@@ -37,7 +37,7 @@ export default function Box() {
     });
   }
 
-  function addRoom(direction, isCurrent) {
+  function addRoom(direction, isCurrent, isHome = false) {
     if (!isCurrent) return;
     const { row, col } = currentSelection;
     let targetRow = null,
@@ -84,6 +84,9 @@ export default function Box() {
           return rows.map((room, colIndex) => {
             if (rowIndex === targetRow && colIndex === targetCol) {
               return new Room(`${targetRow}/${targetCol}`, false);
+            } else if (rowIndex === gridRadius && colIndex === gridRadius) {
+              room.branchup = true;
+              return room;
             } else return room;
           });
         });
@@ -119,6 +122,9 @@ export default function Box() {
     });
   }
 
+  function centerHome() {}
+  function centerSelection() {}
+
   function debug() {
     // console.log(currentSelection);
     // console.log(grid);
@@ -136,7 +142,6 @@ export default function Box() {
                   box.isHome ? (
                     <RoomDiv
                       key={boxIndex}
-                      branches={box.branches}
                       isHome={true}
                       isCurrent={isCurrent(rowIndex, boxIndex)}
                       value="HOME"
@@ -145,7 +150,6 @@ export default function Box() {
                   ) : (
                     <RoomDiv
                       key={boxIndex}
-                      branches={box.branches}
                       isCurrent={isCurrent(rowIndex, boxIndex)}
                       deleteBox={deleteBox}
                       isHome={false}
@@ -168,6 +172,8 @@ export default function Box() {
           {mode ? "late" : "early"}
         </button>
         <button onClick={reset}>reset</button>
+        <button onClick={centerHome}>center home</button>
+        <button onClick={centerSelection}>center current selection</button>
       </div>
     </>
   );
