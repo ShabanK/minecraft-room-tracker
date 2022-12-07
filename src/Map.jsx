@@ -30,6 +30,7 @@ export default function Box() {
     });
     arr[gridRadius][gridRadius] = new Room(`${gridRadius}/${gridRadius}`, true);
     setGrid(arr);
+    setHomeDirection("");
     trail.push(`${gridRadius}/${gridRadius}`);
     setCurrentSelection({
       row: gridRadius,

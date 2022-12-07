@@ -11,7 +11,7 @@ export default function RoomDiv({
   editHomeDirection,
 }) {
   const ref = useRef();
-  const [bgcolor, setbgcolor] = useState(0);
+  const [bgcolor, setbgcolor] = useState(isHome ? 1 : 0);
   const listOfColors = ["blue", "green", "yellow", "orange", "white"];
   const [initialState, setInitialState] = useState("");
 
