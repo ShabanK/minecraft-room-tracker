@@ -7,6 +7,8 @@ export default function RoomDiv({
   isHome,
   isBlank,
   addRoom,
+  homeDirection,
+  editHomeDirection,
 }) {
   const ref = useRef();
   const [bgcolor, setbgcolor] = useState(0);
@@ -42,26 +44,26 @@ export default function RoomDiv({
         <div
           className="pipe"
           onClick={() => {
-            setInitialState("up");
+            if (isHome) editHomeDirection("up");
             addRoom("up", isCurrent, isHome);
           }}
           style={{
             visibility:
-              isHome && initialState && !(initialState === "up") && "hidden",
+              isHome && homeDirection && !(homeDirection === "up") && "hidden",
           }}
         ></div>
         <div className="middle">
           <div
             className="pipe"
             onClick={() => {
-              setInitialState("left");
+              if (isHome) editHomeDirection("left");
               addRoom("left", isCurrent, isHome);
             }}
             style={{
               visibility:
                 isHome &&
-                initialState &&
-                !(initialState === "left") &&
+                homeDirection &&
+                !(homeDirection === "left") &&
                 "hidden",
             }}
           ></div>
@@ -76,14 +78,14 @@ export default function RoomDiv({
           <div
             className="pipe"
             onClick={() => {
-              setInitialState("right");
+              if (isHome) editHomeDirection("right");
               addRoom("right", isCurrent, isHome);
             }}
             style={{
               visibility:
                 isHome &&
-                initialState &&
-                !(initialState === "right") &&
+                homeDirection &&
+                !(homeDirection === "right") &&
                 "hidden",
             }}
           ></div>
@@ -92,10 +94,13 @@ export default function RoomDiv({
           className="pipe"
           style={{
             visibility:
-              isHome && initialState && !(initialState === "down") && "hidden",
+              isHome &&
+              homeDirection &&
+              !(homeDirection === "down") &&
+              "hidden",
           }}
           onClick={() => {
-            setInitialState("down");
+            if (isHome) editHomeDirection("down");
             addRoom("down", isCurrent, isHome);
           }}
         ></div>

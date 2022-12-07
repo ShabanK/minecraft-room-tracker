@@ -1,11 +1,11 @@
 // import MapTracker from "./entities/maptracker";
 import Room from "./entities/room";
 import RoomDiv from "./RoomDiv";
-import { useState, useEffect, useMemo } from "react";
+import { useState } from "react";
 
 export default function Box() {
   const gridRadius = 20;
-  const [mode, setMode] = useState(false);
+  const [homeDirection, setHomeDirection] = useState("");
   const [trail, setTrail] = useState([]);
   const [grid, setGrid] = useState(() => {
     let arr = new Array(gridRadius * 2 + 1).fill().map(function () {
@@ -48,6 +48,18 @@ export default function Box() {
           if (!grid[row - 1][col]) {
             targetRow = row - 1;
             targetCol = col;
+          } else {
+            //check for home
+            if (row - 1 === gridRadius && col === gridRadius) {
+              console.log({ direction, homeDirection });
+              if (homeDirection === "down") {
+                setCurrentSelection({ row: row - 1, col: col });
+              }
+              console.log("hit home");
+            } else {
+              //default
+              setCurrentSelection({ row: row - 1, col: col });
+            }
           }
         }
         break;
@@ -56,6 +68,18 @@ export default function Box() {
           if (!grid[row + 1][col]) {
             targetRow = row + 1;
             targetCol = col;
+          } else {
+            //check for home
+            if (row + 1 === gridRadius && col === gridRadius) {
+              console.log({ direction, homeDirection });
+              if (homeDirection === "up") {
+                setCurrentSelection({ row: row + 1, col: col });
+              }
+              console.log("hit home");
+            } else {
+              //default
+              setCurrentSelection({ row: row + 1, col: col });
+            }
           }
         }
         break;
@@ -64,6 +88,18 @@ export default function Box() {
           if (!grid[row][col - 1]) {
             targetRow = row;
             targetCol = col - 1;
+          } else {
+            //check for home
+            if (row === gridRadius && col - 1 === gridRadius) {
+              console.log({ direction, homeDirection });
+              if (homeDirection === "right") {
+                setCurrentSelection({ row: row, col: col - 1 });
+              }
+              console.log("hit home");
+            } else {
+              //default
+              setCurrentSelection({ row: row, col: col - 1 });
+            }
           }
         }
         break;
@@ -72,6 +108,18 @@ export default function Box() {
           if (!grid[row][col + 1]) {
             targetRow = row;
             targetCol = col + 1;
+          } else {
+            //check for home
+            if (row === gridRadius && col + 1 === gridRadius) {
+              console.log({ direction, homeDirection });
+              if (homeDirection === "left") {
+                setCurrentSelection({ row: row, col: col + 1 });
+              }
+              console.log("hit home");
+            } else {
+              //default
+              setCurrentSelection({ row: row, col: col + 1 });
+            }
           }
         }
         break;
@@ -122,13 +170,17 @@ export default function Box() {
     });
   }
 
-  function centerHome() {}
-  function centerSelection() {}
+  function editHomeDirection(value) {
+    setHomeDirection(value);
+  }
+
+  // function centerHome() {}
+  // function centerSelection() {}
 
   function debug() {
     // console.log(currentSelection);
     // console.log(grid);
-    console.log(trail);
+    // console.log(trail);
   }
 
   return (
@@ -146,6 +198,8 @@ export default function Box() {
                       isCurrent={isCurrent(rowIndex, boxIndex)}
                       value="HOME"
                       addRoom={addRoom}
+                      homeDirection={homeDirection}
+                      editHomeDirection={editHomeDirection}
                     />
                   ) : (
                     <RoomDiv
@@ -168,12 +222,11 @@ export default function Box() {
         })}
       </div>
       <div style={{ display: "flex" }}>
-        <button onClick={() => setMode(!mode)}>
+        {/* <button onClick={() => setMode(!mode)}>
           {mode ? "late" : "early"}
-        </button>
+        </button> */}
         <button onClick={reset}>reset</button>
-        <button onClick={centerHome}>center home</button>
-        <button onClick={centerSelection}>center current selection</button>
+        <button onClick={debug}>test</button>
       </div>
     </>
   );
