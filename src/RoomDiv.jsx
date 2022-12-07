@@ -74,7 +74,18 @@ export default function RoomDiv({
               backgroundColor: listOfColors[bgcolor],
             }}
             onClick={changeBackgroundColor}
-          ></div>
+          >
+            {!isHome && (
+              <button
+                onClick={() => {
+                  console.log({ value });
+                  deleteBox(value);
+                }}
+              >
+                X
+              </button>
+            )}
+          </div>
           <div
             className="pipe"
             onClick={() => {

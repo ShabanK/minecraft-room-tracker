@@ -145,8 +145,10 @@ export default function Box() {
   }
 
   function deleteBox(value) {
+    console.log(value);
     const purgeIndex = trail.findIndex((trailItem) => value === trailItem);
     const purgeTrail = trail.slice(purgeIndex);
+    console.log({ purgeTrail });
 
     setGrid(() => {
       return grid.map((rows, rowIndex) => {
@@ -161,6 +163,24 @@ export default function Box() {
         });
       });
     });
+
+    //set new trail
+    setTrail(trail.slice(0, purgeIndex));
+
+    const newTrail = trail.slice(0, purgeIndex);
+
+    //reset if trail is length 1
+    if (newTrail.length === 1) {
+      reset();
+    } else {
+      //set selection
+      const [rowIndex, colIndex] = newTrail[newTrail.length - 1].split("/");
+      console.log({ rowIndex, colIndex });
+      setCurrentSelection({
+        row: rowIndex,
+        col: colIndex,
+      });
+    }
   }
 
   function editHomeDirection(value) {
@@ -173,7 +193,7 @@ export default function Box() {
   function debug() {
     // console.log(currentSelection);
     // console.log(grid);
-    // console.log(trail);
+    console.log(trail);
   }
 
   return (
@@ -200,9 +220,7 @@ export default function Box() {
                       isCurrent={isCurrent(rowIndex, boxIndex)}
                       deleteBox={deleteBox}
                       isHome={false}
-                      value={`${rowIndex - gridRadius}/${
-                        boxIndex - gridRadius
-                      }`}
+                      value={`${rowIndex}/${boxIndex}`}
                       addRoom={addRoom}
                     />
                   )
@@ -219,6 +237,7 @@ export default function Box() {
           {mode ? "late" : "early"}
         </button> */}
         <button onClick={reset}>reset</button>
+        <button onClick={debug}>test</button>
       </div>
     </>
   );
