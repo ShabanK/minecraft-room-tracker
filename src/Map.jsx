@@ -4,7 +4,7 @@ import RoomDiv from "./RoomDiv";
 import { useState, useEffect, useMemo } from "react";
 
 export default function Box() {
-  const gridRadius = 5;
+  const gridRadius = 20;
   const [mode, setMode] = useState(false);
   const [trail, setTrail] = useState([]);
   const [grid, setGrid] = useState(() => {
@@ -38,7 +38,6 @@ export default function Box() {
   }
 
   function addRoom(direction, isCurrent) {
-    console.log({ direction, isCurrent });
     if (!isCurrent) return;
     const { row, col } = currentSelection;
     let targetRow = null,
@@ -133,10 +132,12 @@ export default function Box() {
           return (
             <div key={rowIndex} className="row">
               {rows.map((box, boxIndex) => {
+                if (box) console.log(box);
                 return box ? (
                   box.isHome ? (
                     <RoomDiv
                       key={boxIndex}
+                      branches={box.branches}
                       isHome={true}
                       isCurrent={isCurrent(rowIndex, boxIndex)}
                       value="HOME"
@@ -145,6 +146,7 @@ export default function Box() {
                   ) : (
                     <RoomDiv
                       key={boxIndex}
+                      branches={box.branches}
                       isCurrent={isCurrent(rowIndex, boxIndex)}
                       deleteBox={deleteBox}
                       isHome={false}

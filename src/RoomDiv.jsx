@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 
 export default function RoomDiv({
   isCurrent,
@@ -10,6 +10,18 @@ export default function RoomDiv({
 }) {
   const [bgcolor, setbgcolor] = useState(0);
   const listOfColors = ["blue", "green", "yellow", "orange", "white"];
+
+  const ref = useRef();
+
+  useEffect(() => {
+    if (ref.current) {
+      ref.current.scrollIntoView({
+        behavior: "auto",
+        block: "center",
+        inline: "center",
+      });
+    }
+  }, [ref.current]);
 
   function changeBackgroundColor() {
     if (bgcolor + 1 === listOfColors.length) setbgcolor(0);
@@ -34,6 +46,7 @@ export default function RoomDiv({
           ></div>
           <div
             className="inner-box"
+            ref={isCurrent ? ref : null}
             style={{
               border: isCurrent ? "2px solid red" : "2px solid black",
               backgroundColor: listOfColors[bgcolor],

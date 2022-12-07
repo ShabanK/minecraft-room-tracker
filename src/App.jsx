@@ -1,14 +1,10 @@
 import { useState } from "react";
 import MapTracker from "./entities/maptracker";
 import Room from "./entities/room";
-import Box from "./Box";
+import Map from "./Map";
 
 function App() {
-  return (
-    <div className="App">
-      <Box />
-    </div>
-  );
+  return <Map />;
 }
 
 export default App;
