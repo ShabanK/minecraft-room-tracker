@@ -51,11 +51,9 @@ export default function Box() {
           } else {
             //check for home
             if (row - 1 === gridRadius && col === gridRadius) {
-              console.log({ direction, homeDirection });
               if (homeDirection === "down") {
                 setCurrentSelection({ row: row - 1, col: col });
               }
-              console.log("hit home");
             } else {
               //default
               setCurrentSelection({ row: row - 1, col: col });
@@ -71,11 +69,9 @@ export default function Box() {
           } else {
             //check for home
             if (row + 1 === gridRadius && col === gridRadius) {
-              console.log({ direction, homeDirection });
               if (homeDirection === "up") {
                 setCurrentSelection({ row: row + 1, col: col });
               }
-              console.log("hit home");
             } else {
               //default
               setCurrentSelection({ row: row + 1, col: col });
@@ -91,11 +87,9 @@ export default function Box() {
           } else {
             //check for home
             if (row === gridRadius && col - 1 === gridRadius) {
-              console.log({ direction, homeDirection });
               if (homeDirection === "right") {
                 setCurrentSelection({ row: row, col: col - 1 });
               }
-              console.log("hit home");
             } else {
               //default
               setCurrentSelection({ row: row, col: col - 1 });
@@ -111,11 +105,9 @@ export default function Box() {
           } else {
             //check for home
             if (row === gridRadius && col + 1 === gridRadius) {
-              console.log({ direction, homeDirection });
               if (homeDirection === "left") {
                 setCurrentSelection({ row: row, col: col + 1 });
               }
-              console.log("hit home");
             } else {
               //default
               setCurrentSelection({ row: row, col: col + 1 });
@@ -226,7 +218,6 @@ export default function Box() {
           {mode ? "late" : "early"}
         </button> */}
         <button onClick={reset}>reset</button>
-        <button onClick={debug}>test</button>
       </div>
     </>
   );
