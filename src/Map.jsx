@@ -177,8 +177,8 @@ export default function Box() {
       const [rowIndex, colIndex] = newTrail[newTrail.length - 1].split("/");
       console.log({ rowIndex, colIndex });
       setCurrentSelection({
-        row: rowIndex,
-        col: colIndex,
+        row: Number.parseInt(rowIndex),
+        col: Number.parseInt(colIndex),
       });
     }
   }
